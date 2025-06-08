@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Sunbeam.SettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sunbeam"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Settings">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid>
+        <NavigationView x:Name="nvSample"
+            IsSettingsVisible="False"
+            IsBackButtonVisible="Collapsed"
+            SelectionChanged="NavView_SelectionChanged"
+            IsPaneOpen="False">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Appearance" Tag="AppearancePage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE771;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Behavior" Tag="BehaviorPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE712;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Favorites" Tag="FavoritesPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE734;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Help" Tag="HelpPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE897;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="About" Tag="AboutPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE946;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+            </NavigationView.MenuItems>
+            <Frame x:Name="SettingsContentFrame"/>
+        </NavigationView>
+        <Button x:Name="exit" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,24" Click="Exit" Padding="33,5,33,6"/>
+    </Grid>
+</Window>

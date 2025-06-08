@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Sunbeam (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Sunbeam (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
