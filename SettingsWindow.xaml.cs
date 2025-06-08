@@ -29,6 +29,7 @@ namespace Sunbeam
             AppWindow.Resize(size);
             AppWindow.Move(new Windows.Graphics.PointInt32((int)(displayArea.WorkArea.Width - size.Width) / 2, (int)(displayArea.WorkArea.Height - size.Height) / 2));
 
+            SettingsContentFrame.Navigate(typeof(SettingsOptionsPage));
         }
         private void Exit(object sender, RoutedEventArgs e)
         {
@@ -40,11 +41,17 @@ namespace Sunbeam
             {
                 switch (selectedItem.Tag)
                 {
-                    case "AppearancePage":
-                        SettingsContentFrame.Navigate(typeof(SettingsAppearancePage));
+                    case "OptionsPage":
+                        SettingsContentFrame.Navigate(typeof(SettingsOptionsPage));
                         break;
-                    case "BehaviorPage":
-                        SettingsContentFrame.Navigate(typeof(SettingsBehaviorPage));
+                    case "FavoritesPage":
+                        SettingsContentFrame.Navigate(typeof(SettingsFavoritesPage));
+                        break;
+                    case "HelpPage":
+                        SettingsContentFrame.Navigate(typeof(SettingsHelpPage));
+                        break;
+                    case "AboutPage":
+                        SettingsContentFrame.Navigate(typeof(SettingsAboutPage));
                         break;
                 }
             }

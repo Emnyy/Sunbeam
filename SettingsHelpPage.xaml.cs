@@ -21,9 +21,9 @@ namespace Sunbeam
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsAppearancePage : Page
+    public sealed partial class SettingsHelpPage : Page
     {
-        public SettingsAppearancePage()
+        public SettingsHelpPage()
         {
             InitializeComponent();
         }

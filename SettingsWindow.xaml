@@ -21,15 +21,10 @@
             IsPaneOpen="False">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Appearance" Tag="AppearancePage">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE771;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
 
-                <NavigationViewItem Content="Behavior" Tag="BehaviorPage">
+                <NavigationViewItem Content="Options" Tag="OptionsPage">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE712;"/>
+                        <FontIcon Glyph="&#xE713;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
@@ -54,6 +49,5 @@
             </NavigationView.MenuItems>
             <Frame x:Name="SettingsContentFrame"/>
         </NavigationView>
-        <Button x:Name="exit" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,24" Click="Exit" Padding="33,5,33,6"/>
-    </Grid>
+        </Grid>
 </Window>
