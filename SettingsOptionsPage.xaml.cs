@@ -23,9 +23,28 @@ namespace Sunbeam
     /// </summary>
     public sealed partial class SettingsOptionsPage : Page
     {
+        public SettingsViewModel ViewModel { get; set; }
+
         public SettingsOptionsPage()
         {
+            ViewModel = SettingsViewModel.LoadSettings();
             InitializeComponent();
+        }
+
+        private void ColorMode_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (ColorModeControl.SelectedIndex == 2)
+            {
+                ColorPicker.IsEnabled = true;
+            }
+            else
+            {
+                ColorPicker.IsEnabled = false;
+            }
+        }
+        private void AppTheme_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }

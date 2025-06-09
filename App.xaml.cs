@@ -28,7 +28,7 @@ namespace Sunbeam
         }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
+            _window = new SettingsWindow();
             _window.Activate();
         }
     }

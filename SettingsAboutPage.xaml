@@ -16,10 +16,16 @@
             <TextBlock Text="About" FontSize="40" FontWeight="SemiBold"  Padding="36, 40, 0, 36"/>
 
             <StackPanel Padding="36, 0, 36, 12">
-                <TextBlock Text="" FontSize="20"/>
                 <controls:SettingsCard Margin="0, 0, 0, 4" Header="Sunbeam version 1.0"
 HeaderIcon="{ui:FontIcon Glyph=&#xE706;}">
-                    <Button Content="Check for updates"/>
+                    <StackPanel Orientation="Horizontal">
+                        <ProgressRing x:Name="UpRing" IsActive="False" Margin="0, 0, 24, 0"/>
+                        <Button x:Name="UpdateButton" Content="Check for updates"/>
+                    </StackPanel>
+                </controls:SettingsCard>
+                <controls:SettingsCard Margin="0, 0, 0, 4" Header="No update available"
+HeaderIcon="{ui:FontIcon Glyph=&#xE72C;}">
+                    <Button IsEnabled="False" x:Name="UpdateAvailable" Content="Update"/>
                 </controls:SettingsCard>
                 <HyperlinkButton Content="Github page" NavigateUri="https://github.com/Emnyy/Sunbeam"/>
             </StackPanel>
