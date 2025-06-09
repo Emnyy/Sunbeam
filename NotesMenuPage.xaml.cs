@@ -14,91 +14,36 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace Sunbeam
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class NotesMenuPage : Page
     {
         public NotesMenuPage()
         {
             InitializeComponent();
-        }
-        private void NoteHover(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Border border && border.Child is FontIcon icon)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorSecondaryBrush"] is SolidColorBrush brush)
-                {
-                    icon.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-            else if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorSecondaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-        }
-        private void NoteHoverStop(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Border border && border.Child is FontIcon icon)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorPrimaryBrush"] is SolidColorBrush brush)
-                {
-                    icon.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-            else if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorPrimaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-        }
+            NoteList.PointerEntered += UIHelpers.NoteHover;
+            NoteList.PointerExited += UIHelpers.NoteHoverStop;
 
-        private void TitleHover(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorSecondaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                    block.TextDecorations = Windows.UI.Text.TextDecorations.Underline;
-                }
-            }
+            Favorites.PointerEntered += UIHelpers.NoteHover;
+            Favorites.PointerExited += UIHelpers.NoteHoverStop;
         }
-
-        private void TitleHoverStop(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorPrimaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                    block.TextDecorations = Windows.UI.Text.TextDecorations.None;
-                }
-            }
-        }
+        
         private void ReturnToNotes(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(NotesMainPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
         }
         private void ToggleFavortie(object sender, PointerRoutedEventArgs e)
         {
-            if (Favorites.Glyph != "\uE735")
+            if(sender is Border border && border.Child is FontIcon icon)
             {
-                Favorites.Glyph = "\uE735";
-            }
-            else
-            {
-                Favorites.Glyph = "\uE734";
+                if (icon.Glyph != "\uE735")
+                {
+                    icon.Glyph = "\uE735";
+                }
+                else
+                {
+                    icon.Glyph = "\uE734";
+                }
             }
         }
     }

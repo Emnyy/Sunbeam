@@ -1,3 +1,4 @@
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -21,73 +22,17 @@ namespace Sunbeam
         public NotesMainPage()
         {
             InitializeComponent();
-        }
-        private void ExitApp(object sender, PointerRoutedEventArgs e)
-        {
-            App.Current.Exit();
-        }
-        private void NoteHover(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Border border && border.Child is FontIcon icon)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorSecondaryBrush"] is SolidColorBrush brush)
-                {
-                    icon.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-            else if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorSecondaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-        }
-        private void NoteHoverStop(object sender, global::Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (sender is Border border && border.Child is FontIcon icon)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorPrimaryBrush"] is SolidColorBrush brush)
-                {
-                    icon.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-            else if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorPrimaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                }
-            }
-        }
+            NoteList.PointerEntered += UIHelpers.NoteHover;
+            NoteList.PointerExited += UIHelpers.NoteHoverStop;
 
-        private void TitleHover(object sender, global::Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorSecondaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                    block.TextDecorations = Windows.UI.Text.TextDecorations.Underline;
-                }
-            }
-        }
-
-        private void TitleHoverStop(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Border border1 && border1.Child is TextBlock block)
-            {
-                if (Application.Current.Resources["TextOnAccentFillColorPrimaryBrush"] is SolidColorBrush brush)
-                {
-                    block.Foreground = new SolidColorBrush(brush.Color);
-                    block.TextDecorations = Windows.UI.Text.TextDecorations.None;
-                }
-            }
+            Exit.PointerEntered += UIHelpers.NoteHover;
+            Exit.PointerExited += UIHelpers.NoteHoverStop;
+            Exit.PointerPressed += UIHelpers.ExitApp;
         }
 
         private void ListNotes(object sender, PointerRoutedEventArgs e)
         {
             Frame.Navigate(typeof(NotesMenuPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
         }
-}
+    }
 }

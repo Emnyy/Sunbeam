@@ -40,5 +40,13 @@ namespace Sunbeam
                 SetTitleBar(page.FindName("TopBar") as UIElement);
             }
         }
+
+        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs args)
+        {
+            if (MainFrame.Content is Page page)
+            {
+                SetTitleBar(page.FindName("TopBar") as UIElement);
+            }
+        }
     }
 }

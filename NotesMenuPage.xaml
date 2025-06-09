@@ -8,19 +8,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource AccentFillColorDefaultBrush}">
+    <Grid Background="{ThemeResource SystemAccentColor}">
         <StackPanel VerticalAlignment="Top" x:Name="TopBar">
             <Grid>
-                <Border Padding="12" PointerPressed="ReturnToNotes"  PointerEntered="NoteHover" PointerExited="NoteHoverStop" HorizontalAlignment="Left">
-                    <FontIcon x:Name="NoteList" Glyph="&#xE72B;" FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+                <Border  x:Name="NoteList" Padding="12" PointerPressed="ReturnToNotes" HorizontalAlignment="Left">
+                    <FontIcon Glyph="&#xE72B;" FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                 </Border>
 
                 <Border Padding="12" HorizontalAlignment="Center">
-                    <CalendarDatePicker PlaceholderText="Pick a date" Foreground="{ThemeResource AccentFillColorDefaultBrush}" Background="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+                    <CalendarDatePicker PlaceholderText="Pick a date" Foreground="{ThemeResource SystemAccentColor}" Background="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                 </Border>
 
-                <Border Padding="12" PointerEntered="NoteHover" PointerPressed="ToggleFavortie" PointerExited="NoteHoverStop" HorizontalAlignment="Right">
-                    <FontIcon x:Name="Favorites" Glyph="&#xE734;" FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+                <Border x:Name="Favorites" Padding="12" PointerPressed="ToggleFavortie" HorizontalAlignment="Right">
+                    <FontIcon Glyph="&#xE734;" FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                 </Border>
             </Grid>
         </StackPanel>
