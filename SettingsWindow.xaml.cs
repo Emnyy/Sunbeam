@@ -29,16 +29,26 @@ namespace Sunbeam
             var displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Primary);
             var size = new Windows.Graphics.SizeInt32((int)(0.7 * displayArea.WorkArea.Width), (int)(0.7 * displayArea.WorkArea.Height));
             AppWindow.Resize(size);
-            AppWindow.Move(new Windows.Graphics.PointInt32((int)(displayArea.WorkArea.Width - size.Width) / 2, (int)(displayArea.WorkArea.Height - size.Height) / 2));
+            AppWindow.Move(new Windows.Graphics.PointInt32((displayArea.WorkArea.Width - size.Width) / 2, (displayArea.WorkArea.Height - size.Height) / 2));
 
             SettingsContentFrame.Navigate(typeof(SettingsOptionsPage));
-            Closed += MainWindow_Closed;
+            Closed += Window_SaveSettings;
+            Activated += Window_SaveSettings;
         }
 
-        private void MainWindow_Closed(object sender, WindowEventArgs e)
+        private void Window_SaveSettings(object sender, WindowActivatedEventArgs args)
+        {
+            if (args.WindowActivationState == WindowActivationState.Deactivated)
+            {
+                SettingsViewModel.SaveSettings(ViewModel);
+            }
+        }
+
+        private void Window_SaveSettings(object sender, WindowEventArgs e)
         {
             SettingsViewModel.SaveSettings(ViewModel);
         }
+
 
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Data.SqlTypes;
 
 namespace Sunbeam
 {
@@ -22,17 +24,29 @@ namespace Sunbeam
     {
         private Window? _window;
 
+        private static readonly Mutex mutex = new(true, "SunbeamMutex");
+
         public App()
         {
-            ViewModel = SettingsViewModel.LoadSettings();
+            ViewModel = new SettingsViewModel();
             InitializeComponent();
         }
 
         public SettingsViewModel ViewModel { get; set; }
+
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new SettingsWindow();
-            _window.Activate();
+            if (!mutex.WaitOne(0, false))
+            {
+                _window = new MainWindow();
+                _window.Activate();
+            }
+            else
+            {
+                ViewModel = SettingsViewModel.LoadSettings();
+                _window = new SettingsWindow();
+                _window.Activate();
+            }
         }
     }
 }
