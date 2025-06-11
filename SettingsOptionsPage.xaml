@@ -9,7 +9,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{x:Bind ViewModel}">
+    DataContext="{x:Bind ViewModel}"
+     x:Name="ThisPage">
 
     <Page.Resources>
         <!--  These styles can be referenced to create a consistent SettingsPage layout  -->
@@ -62,7 +63,7 @@
                             </RadioButtons>
                         </controls:SettingsCard>
                         <controls:SettingsCard Header="Custom color" Background="Transparent">
-                            <Button x:Name="ColorPicker" Content="Pick color" Click="ColorPicker_open" IsEnabled="False"/>
+                            <Button x:Name="ColorPicker" Width="200" Content="Choose color" Foreground="Transparent" Click="ColorPicker_open" Background="{Binding CustomColor}" IsEnabled="False"/>
 
                         </controls:SettingsCard>
                     </controls:SettingsExpander.Items>
@@ -117,13 +118,13 @@ HeaderIcon="{ui:FontIcon Glyph=&#xE78B;}">
                 <controls:SettingsCard Margin="0, 0, 0, 4" Description="Open the regular notes window"
 Header="Notes shortcut"
 HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}">
-                    <TextBox IsReadOnly="True" TextAlignment="Center"/>
+                    <TextBox IsReadOnly="True" Text="{Binding RegularNotesShortcut, Mode=TwoWay}" x:Name="RegularShortcutBox" TextAlignment="Center" KeyDown="ShortcutBox_KeyDown" GotFocus="ShortcutBox_GotFocus" LostFocus="RegularShortcutBox_LostFocus"/>
                 </controls:SettingsCard>
 
                 <controls:SettingsCard Margin="0, 0, 0, 4" Description="Open the favorite notes window"
 Header="Favorite notes shortcut"
 HeaderIcon="{ui:FontIcon Glyph=&#xE728;}">
-                    <TextBox IsReadOnly="True" TextAlignment="Center"/>
+                    <TextBox IsReadOnly="True" Text="{Binding FavoriteNotesShortcut, Mode=TwoWay}" x:Name="FavoriteShortcutBox" TextAlignment="Center" KeyDown="ShortcutBox_KeyDown" GotFocus="ShortcutBox_GotFocus" LostFocus="FavoriteShortcutBox_LostFocus"/>
                 </controls:SettingsCard>
 
                 <controls:SettingsCard Margin="0, 0, 0, 24" Description="Adjust the scale of the note window"

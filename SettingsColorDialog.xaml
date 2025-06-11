@@ -17,6 +17,6 @@
       IsColorChannelTextInputVisible="True"
       IsHexInputVisible="True"
       IsAlphaEnabled="False"
-            Color="{Binding CustomColor, Mode=TwoWay}"/>
+                     Color="{Binding CustomColor}"/>
     </Grid>
 </Page>
