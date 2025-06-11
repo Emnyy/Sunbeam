@@ -24,8 +24,11 @@ namespace Sunbeam
 
         public App()
         {
+            ViewModel = SettingsViewModel.LoadSettings();
             InitializeComponent();
         }
+
+        public SettingsViewModel ViewModel { get; set; }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new SettingsWindow();

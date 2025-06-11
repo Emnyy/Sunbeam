@@ -17,6 +17,7 @@
     <None Remove="NotesMainPage.xaml" />
     <None Remove="NotesMenuPage.xaml" />
     <None Remove="SettingsAboutPage.xaml" />
+    <None Remove="SettingsColorDialog.xaml" />
     <None Remove="SettingsFavoritesPage.xaml" />
     <None Remove="SettingsHelpPage.xaml" />
     <None Remove="SettingsOptionsPage.xaml" />
@@ -45,6 +46,11 @@
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="SettingsColorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="SettingsAboutPage.xaml">

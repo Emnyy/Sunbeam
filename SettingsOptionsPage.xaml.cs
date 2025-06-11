@@ -13,26 +13,22 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace Sunbeam
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class SettingsOptionsPage : Page
     {
-        public SettingsViewModel ViewModel { get; set; }
-
         public SettingsOptionsPage()
         {
-            ViewModel = SettingsViewModel.LoadSettings();
             InitializeComponent();
+            ViewModel = ((App)Application.Current).ViewModel;
         }
+
+        public SettingsViewModel ViewModel { get; set; }
 
         private void ColorMode_Changed(object sender, SelectionChangedEventArgs e)
         {
+            ViewModel.ColorMode = ColorModeControl.SelectedIndex;
             if (ColorModeControl.SelectedIndex == 2)
             {
                 ColorPicker.IsEnabled = true;
@@ -42,9 +38,33 @@ namespace Sunbeam
                 ColorPicker.IsEnabled = false;
             }
         }
+
         private void AppTheme_Changed(object sender, SelectionChangedEventArgs e)
         {
-            
+
+        }
+
+        private async void ColorPicker_open(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new()
+            {
+                XamlRoot = this.XamlRoot,
+                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                Title = "Choose a custom color",
+                PrimaryButtonText = "Done",
+                CloseButtonText = "Cancel",
+                Content = new SettingsColorDialog()
+            };
+
+            switch( await dialog.ShowAsync())
+            {
+                case ContentDialogResult.Primary:
+                    var colorDialog = (SettingsColorDialog)dialog.Content;
+                    ViewModel.CustomColor = colorDialog.FindName("ColorWheel") is ColorPicker colorPicker ? colorPicker.Color.ToString() : ViewModel.CustomColor;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

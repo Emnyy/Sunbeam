@@ -40,7 +40,7 @@
 
                     <controls:SettingsExpander.Items>
                         <controls:SettingsCard HorizontalAlignment="Left" Background="Transparent">
-                            <RadioButtons x:Name="AppThemeControl" SelectionChanged="AppTheme_Changed" SelectedIndex="{Binding AppTheme}">
+                            <RadioButtons x:Name="AppThemeControl" SelectionChanged="AppTheme_Changed" SelectedIndex="{Binding AppTheme, Mode=TwoWay}">
                                 <RadioButton Content="Light"/>
                                 <RadioButton Content="Dark"/>
                                 <RadioButton Content="Use system setting"/>
@@ -55,14 +55,14 @@
 
                     <controls:SettingsExpander.Items>
                         <controls:SettingsCard  HorizontalAlignment="Left" Background="Transparent">
-                            <RadioButtons x:Name="ColorModeControl" SelectionChanged="ColorMode_Changed" SelectedIndex="{Binding ColorMode}">
+                            <RadioButtons x:Name="ColorModeControl" SelectionChanged="ColorMode_Changed" SelectedIndex="{Binding ColorMode, Mode=TwoWay}">
                                 <RadioButton Content="Accent"/>
                                 <RadioButton Content="Random"/>
                                 <RadioButton Content="Custom"/>
                             </RadioButtons>
                         </controls:SettingsCard>
-                        <controls:SettingsCard Header="Pick color" Background="Transparent">
-                            <controls:ColorPickerButton x:Name="ColorPicker" Width="200" SelectedColor="{Binding CustomColor}" IsEnabled="False"/>
+                        <controls:SettingsCard Header="Custom color" Background="Transparent">
+                            <Button x:Name="ColorPicker" Content="Pick color" Click="ColorPicker_open" IsEnabled="False"/>
 
                         </controls:SettingsCard>
                     </controls:SettingsExpander.Items>
@@ -77,7 +77,7 @@
 
                     <controls:SettingsExpander.Items>
                         <controls:SettingsCard Header="Size" Background="Transparent">
-                            <ComboBox IsEditable="True" SelectedValue="{Binding FontSize}" Width="200">
+                            <ComboBox IsEditable="True" SelectedValue="{Binding FontSize, Mode=TwoWay}" Width="200">
                                 <x:Int32>8</x:Int32>
                                 <x:Int32>9</x:Int32>
                                 <x:Int32>10</x:Int32>
@@ -103,7 +103,7 @@
                 <controls:SettingsCard Margin="0, 0, 0, 4" Description="Fit text within window by default"
    Header="Word wrap"
    HeaderIcon="{ui:FontIcon Glyph=&#xE8C4;}">
-                    <ToggleSwitch IsOn="{Binding Wrap}" />
+                    <ToggleSwitch IsOn="{Binding Wrap, Mode=TwoWay}" />
                 </controls:SettingsCard>
 
                 <TextBlock Text="System" FontSize="14" Padding="0, 12, 0, 12"/>
@@ -111,7 +111,7 @@
                 <controls:SettingsCard Margin="0, 0, 0, 4" Description="Start Sunbeam when you log on"
 Header="Auto start"
 HeaderIcon="{ui:FontIcon Glyph=&#xE78B;}">
-                    <ToggleSwitch IsOn="{Binding AutoStart}" />
+                    <ToggleSwitch IsOn="{Binding AutoStart, Mode=TwoWay}" />
                 </controls:SettingsCard>
                 
                 <controls:SettingsCard Margin="0, 0, 0, 4" Description="Open the regular notes window"
@@ -129,7 +129,7 @@ HeaderIcon="{ui:FontIcon Glyph=&#xE728;}">
                 <controls:SettingsCard Margin="0, 0, 0, 24" Description="Adjust the scale of the note window"
 Header="Window scale"
 HeaderIcon="{ui:FontIcon Glyph=&#xE9A6;}">
-                    <Slider Value="{Binding WindowScale}" Width="200" Minimum="10" Maximum="100" SmallChange="10"/>
+                    <Slider Value="{Binding WindowScale, Mode=TwoWay}" Width="200" Minimum="10" Maximum="100" SmallChange="10"/>
                 </controls:SettingsCard>
 
             </StackPanel>

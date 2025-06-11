@@ -19,13 +19,22 @@ namespace Sunbeam
 
         public int WindowScale { get; set; } = 60;
         public bool AutoStart { get; set; } = true;
-
+                
         public static SettingsViewModel LoadSettings()
         {
-            string path = "C:\\Users\\Bunny\\Documents\\Projects\\Sunbeam\\config.json";
+            string path = "config.json";
             string json = File.ReadAllText(path);
             SettingsViewModel settingsViewModel = JsonSerializer.Deserialize<SettingsViewModel>(json) ?? new();
             return settingsViewModel;
+        }
+
+        //private static readonly JsonSerializerOptions CachedJsonSerializerOptions = new() { WriteIndented = true };
+
+        public static void SaveSettings(SettingsViewModel settings)
+        {
+            string path = "config.json";
+            string json = JsonSerializer.Serialize(settings);
+            File.WriteAllText(path, json);
         }
     }
 }

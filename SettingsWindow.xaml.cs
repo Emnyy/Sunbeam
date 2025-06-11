@@ -18,9 +18,11 @@ namespace Sunbeam
 {
     public sealed partial class SettingsWindow : Window
     {
+        public SettingsViewModel ViewModel { get; set; }
         public SettingsWindow()
         {
             InitializeComponent();
+            ViewModel = ((App)Application.Current).ViewModel;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
 
@@ -30,11 +32,15 @@ namespace Sunbeam
             AppWindow.Move(new Windows.Graphics.PointInt32((int)(displayArea.WorkArea.Width - size.Width) / 2, (int)(displayArea.WorkArea.Height - size.Height) / 2));
 
             SettingsContentFrame.Navigate(typeof(SettingsOptionsPage));
+            Closed += MainWindow_Closed;
         }
-        private void Exit(object sender, RoutedEventArgs e)
+
+        private void MainWindow_Closed(object sender, WindowEventArgs e)
         {
-            App.Current.Exit();
+            SettingsViewModel.SaveSettings(ViewModel);
         }
+
+
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.SelectedItem is NavigationViewItem selectedItem)
