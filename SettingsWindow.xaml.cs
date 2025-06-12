@@ -34,14 +34,14 @@ namespace Sunbeam
         [LibraryImport("user32.dll")]
         private static partial int UnregisterHotKey(IntPtr hWnd, int id);
 
-        [LibraryImport("Comctl32.dll")]
-        private static partial int SetWindowSubclass(IntPtr hWnd, SUBCLASSPROC pfnSubclass, uint uIdSubclass, IntPtr dwRefData);
+        [DllImport("Comctl32.dll", SetLastError = true)]
+        public static extern bool SetWindowSubclass(IntPtr hWnd, SUBCLASSPROC pfnSubclass, uint uIdSubclass, uint dwRefData);
 
-        [LibraryImport("Comctl32.dll")]
-        private static partial IntPtr DefSubclassProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+        [DllImport("Comctl32.dll", SetLastError = true)]
+        public static extern int DefSubclassProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
 
-        private delegate IntPtr SUBCLASSPROC(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData);
-
+        public delegate int SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, IntPtr uIdSubclass, uint dwRefData);
+        private SUBCLASSPROC SubClassDelegate;
         public SettingsWindow()
         {
             InitializeComponent();
@@ -102,13 +102,13 @@ namespace Sunbeam
                 }
             }
             _ = RegisterHotKey(hwnd, 2, modifiers, key);
-            SUBCLASSPROC newWndProc = new(WndProc);
-            SetWindowSubclass(hwnd, newWndProc, 1, IntPtr.Zero);
+            SubClassDelegate = new SUBCLASSPROC(WindowSubClass);
+            bool bRet = SetWindowSubclass(hwnd, SubClassDelegate, 0, 0);
         }
 
-        private IntPtr WndProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
+        private int WindowSubClass(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, IntPtr uIdSubclass, uint dwRefData)
         {
-            if (msg == 0x0312)
+            if (uMsg == 0x0312)
             {
                 switch (wParam.ToInt32())
                 {
@@ -120,7 +120,7 @@ namespace Sunbeam
                         throw new NotImplementedException("Favorite Notes Shortcut is not implemented yet.");
                 }
             }
-            return DefSubclassProc(hwnd, msg, wParam, lParam);
+            return DefSubclassProc(hWnd, uMsg, wParam, lParam);
         }
 
 
