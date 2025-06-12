@@ -27,7 +27,12 @@ namespace Sunbeam
 
             Exit.PointerEntered += UIHelpers.NoteHover;
             Exit.PointerExited += UIHelpers.NoteHoverStop;
-            Exit.PointerPressed += UIHelpers.ExitApp;
+            Exit.PointerPressed += CloseWindow;
+            WinArea.Focus(FocusState.Pointer);
+        }
+
+        private void CloseWindow(object sender, PointerRoutedEventArgs e)
+        {
         }
 
         private void ListNotes(object sender, PointerRoutedEventArgs e)

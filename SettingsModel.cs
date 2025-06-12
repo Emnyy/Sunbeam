@@ -24,7 +24,7 @@ namespace Sunbeam
         public string RegularNotesShortcut { get; set; } = "Ctrl + Menu + N";
         public string FavoriteNotesShortcut { get; set; } = "Ctrl + Menu + F";
 
-        
+
 
         public static SettingsViewModel LoadSettings()
         {
@@ -33,8 +33,6 @@ namespace Sunbeam
             SettingsViewModel settingsViewModel = JsonSerializer.Deserialize<SettingsViewModel>(json) ?? new();
             return settingsViewModel;
         }
-
-        //private static readonly JsonSerializerOptions CachedJsonSerializerOptions = new() { WriteIndented = true };
 
         public static void SaveSettings(SettingsViewModel settings)
         {

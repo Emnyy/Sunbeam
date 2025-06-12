@@ -21,18 +21,18 @@ namespace Sunbeam
 {
     public sealed partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-            Window window = this;
-            window.ExtendsContentIntoTitleBar = true;
-            window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
+            ExtendsContentIntoTitleBar = true;
+            AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
 
-            var displayArea = DisplayArea.GetFromWindowId(window.AppWindow.Id, DisplayAreaFallback.Primary);
+            var displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Primary);
             var wSize = 0.7 * displayArea.WorkArea.Height;
 
             var newSize = new Windows.Graphics.SizeInt32((int)(wSize), (int)(wSize));
-            window.AppWindow.Resize(newSize);
+            AppWindow.Resize(newSize);
 
             MainFrame.Navigate(typeof(NotesMainPage));
             if (MainFrame.Content is Page page)
