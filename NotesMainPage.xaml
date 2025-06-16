@@ -6,7 +6,8 @@
     xmlns:local="using:Sunbeam"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{x:Bind GlobalMemory}">
 
     <Grid Background="{ThemeResource SystemAccentColor}" x:Name="WinArea">
         <Grid.RowDefinitions>
@@ -22,7 +23,15 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <FontIcon x:Name="IsFavoriteStar1" Glyph="&#xE734;"  FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                     <Border Padding="12" HorizontalAlignment="Center">
-                        <TextBox x:Name="FileName" Text="Unnamed" FontSize="24" Background="{ThemeResource SystemAccentColor}" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+                        <TextBox IsTabStop="False" x:Name="FileName" Text="{Binding CurrentFile}" FontSize="24" Background="{ThemeResource SystemAccentColor}" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}">
+                            <TextBox.Resources>
+                                <SolidColorBrush x:Key="TextControlBackground" Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{ThemeResource SystemAccentColorLight3}"/>
+                                <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{ThemeResource SystemAccentColorLight3}"/>
+                                <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{ThemeResource SystemAccentColor}"/>
+                            </TextBox.Resources>
+                        </TextBox>
                     </Border>
                     <FontIcon x:Name="IsFavoriteStar2" Glyph="&#xE734;"  FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                 </StackPanel>

@@ -35,10 +35,27 @@ namespace Sunbeam
             AppWindow.Resize(newSize);
 
             MainFrame.Navigate(typeof(NotesMainPage));
+
+            var present = AppWindow.Presenter as OverlappedPresenter;
+            if (present != null)
+            {
+                present.IsAlwaysOnTop = true;
+            }
+
+
             if (MainFrame.Content is Page page)
             {
                 SetTitleBar(page.FindName("TopBar") as UIElement);
+                if (page.FindName("Exit") is Border exit)
+                {
+                    exit.PointerPressed += CloseWindow;
+                }
             }
+        }
+
+        private void CloseWindow(object sender, PointerRoutedEventArgs e)
+        {
+            Close();
         }
 
         private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs args)

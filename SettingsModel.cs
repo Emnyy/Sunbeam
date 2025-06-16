@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
-using System.Text.Json;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
+using Newtonsoft.Json;
 
 namespace Sunbeam
 {
@@ -19,26 +19,31 @@ namespace Sunbeam
         public bool Wrap { get; set; } = true;
 
         public int WindowScale { get; set; } = 60;
+        //public int WindowOpacity { get; set; } = 100;
+        //public bool CompactMode { get; set; } = false;
         public bool AutoStart { get; set; } = true;
 
-        public string RegularNotesShortcut { get; set; } = "Ctrl + Menu + N";
-        public string FavoriteNotesShortcut { get; set; } = "Ctrl + Menu + F";
-
-
+        public string RegularNotesShortcut { get; set; } = "Control + Menu + N";
+        public string FavoriteNotesShortcut { get; set; } = "Control + Menu + F";
 
         public static SettingsViewModel LoadSettings()
         {
             string path = "config.json";
             string json = File.ReadAllText(path);
-            SettingsViewModel settingsViewModel = JsonSerializer.Deserialize<SettingsViewModel>(json) ?? new();
-            return settingsViewModel;
+            SettingsViewModel settings = JsonConvert.DeserializeObject<SettingsViewModel>(json) ?? new();
+            return settings;
         }
 
         public static void SaveSettings(SettingsViewModel settings)
         {
             string path = "config.json";
-            string json = JsonSerializer.Serialize(settings);
+            string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             File.WriteAllText(path, json);
         }
+    }
+
+    public class GlobalMemory
+    {
+        public string? CurrentFile { get; set; }
     }
 }

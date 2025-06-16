@@ -41,7 +41,8 @@ namespace Sunbeam
         public static extern int DefSubclassProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
 
         public delegate int SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, IntPtr uIdSubclass, uint dwRefData);
-        private SUBCLASSPROC SubClassDelegate;
+        public SUBCLASSPROC SubClassDelegate;
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -57,8 +58,6 @@ namespace Sunbeam
             SettingsContentFrame.Navigate(typeof(SettingsOptionsPage));
             Closed += Window_SaveSettings;
             Activated += Window_SaveSettings;
-
-
 
             uint modifiers = 0;
             uint key = 0;
@@ -102,7 +101,7 @@ namespace Sunbeam
                 }
             }
             _ = RegisterHotKey(hwnd, 2, modifiers, key);
-            SubClassDelegate = new SUBCLASSPROC(WindowSubClass);
+            SubClassDelegate = new(WindowSubClass);
             bool bRet = SetWindowSubclass(hwnd, SubClassDelegate, 0, 0);
         }
 

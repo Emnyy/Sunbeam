@@ -33,9 +33,36 @@ namespace Sunbeam
         }
 
         public SettingsViewModel ViewModel { get; set; }
+        public GlobalMemory GlobalMemory { get; set; } = new GlobalMemory();
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            string FileName = "Notes";
+            int count = 0;
+
+            if (!Directory.Exists(FileName))
+            {
+                Directory.CreateDirectory(FileName);
+            }
+
+            FileName = "Notes\\Unnamed" + count + ".txt";
+
+            while (File.Exists(FileName))
+            {
+                if (File.ReadAllText(FileName) == String.Empty)
+                {
+                    count = -1;
+                    break;
+                }
+                FileName = "Notes\\Unnamed" + count + ".txt";
+                count++;
+                
+            }
+
+            if (count != -1) { File.Create(FileName); }
+
+            GlobalMemory.CurrentFile = FileName[6..^4];
+
             if (!mutex.WaitOne(0, false))
             {
                 _window = new MainWindow();
