@@ -24,14 +24,14 @@ namespace Sunbeam
         public SettingsOptionsPage()
         {
             InitializeComponent();
-            ViewModel = ((App)Application.Current).ViewModel;
+            Settings = ((App)Application.Current).Settings;
         }
 
-        public SettingsViewModel ViewModel { get; set; }
+        public Settings Settings { get; set; }
 
         private void ColorMode_Changed(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.ColorMode = ColorModeControl.SelectedIndex;
+            Settings.ColorMode = ColorModeControl.SelectedIndex;
             if (ColorModeControl.SelectedIndex == 2)
             {
                 ColorPicker.IsEnabled = true;
@@ -63,11 +63,11 @@ namespace Sunbeam
             {
                 case ContentDialogResult.Primary:
                     var colorDialog = (SettingsColorDialog)dialog.Content;
-                    ViewModel.CustomColor = colorDialog.FindName("ColorWheel") is ColorPicker colorPicker ? colorPicker.Color.ToString() : ViewModel.CustomColor;
+                    Settings.CustomColor = colorDialog.FindName("ColorWheel") is ColorPicker colorPicker ? colorPicker.Color.ToString() : Settings.CustomColor;
 
                     Binding binding = new()
                     {
-                        Source = ViewModel,
+                        Source = Settings,
                         Path = new PropertyPath("CustomColor")
                     };
                     ColorPicker.SetBinding(Control.BackgroundProperty, binding);

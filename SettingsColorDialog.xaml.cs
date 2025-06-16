@@ -19,11 +19,11 @@ namespace Sunbeam;
 
 public sealed partial class SettingsColorDialog : Page
 {
-    public SettingsViewModel ViewModel { get; set; }
+    public Settings Settings { get; set; }
 
     public SettingsColorDialog()
     {
-        ViewModel = ((App)Application.Current).ViewModel;
+        Settings = ((App)Application.Current).Settings;
         InitializeComponent();
     }
 }

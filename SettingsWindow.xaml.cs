@@ -26,7 +26,7 @@ namespace Sunbeam
 {
     public sealed partial class SettingsWindow : Window
     {
-        public SettingsViewModel ViewModel { get; set; }
+        public Settings Settings { get; set; }
 
         [LibraryImport("user32.dll")]
         private static partial int RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
@@ -46,7 +46,7 @@ namespace Sunbeam
         public SettingsWindow()
         {
             InitializeComponent();
-            ViewModel = ((App)Application.Current).ViewModel;
+            Settings = ((App)Application.Current).Settings;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
 
@@ -62,7 +62,7 @@ namespace Sunbeam
             uint modifiers = 0;
             uint key = 0;
 
-            string[] parts = ViewModel.RegularNotesShortcut.Split(" + ");
+            string[] parts = Settings.RegularNotesShortcut.Split(" + ");
             foreach (string part in parts)
             {
                 switch (part)
@@ -83,7 +83,7 @@ namespace Sunbeam
             IntPtr hwnd = WindowNative.GetWindowHandle(this);
             _ = RegisterHotKey(hwnd, 1, modifiers, key);
 
-            parts = ViewModel.FavoriteNotesShortcut.Split(" + ");
+            parts = Settings.FavoriteNotesShortcut.Split(" + ");
             foreach (string part in parts)
             {
                 switch (part)
@@ -127,14 +127,14 @@ namespace Sunbeam
         {
             if (args.WindowActivationState == WindowActivationState.Deactivated)
             {
-                SettingsViewModel.SaveSettings(ViewModel);
+                Settings.SaveSettings(Settings);
             }
             _ = UnregisterHotKey(IntPtr.Zero, 1);
         }
 
         private void Window_SaveSettings(object sender, WindowEventArgs e)
         {
-            SettingsViewModel.SaveSettings(ViewModel);
+            Settings.SaveSettings(Settings);
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

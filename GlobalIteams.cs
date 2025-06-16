@@ -9,7 +9,12 @@ using Newtonsoft.Json;
 
 namespace Sunbeam
 {
-    public class SettingsViewModel
+    public class GlobalItems
+    {
+        public static GlobalMemory? GlobalMemory { get; set; }
+        public static Settings? Settings { get; set; }
+    }
+    public class Settings
     {
         public int AppTheme { get; set; } = 2;
         public int ColorMode { get; set; } = 0;
@@ -26,15 +31,15 @@ namespace Sunbeam
         public string RegularNotesShortcut { get; set; } = "Control + Menu + N";
         public string FavoriteNotesShortcut { get; set; } = "Control + Menu + F";
 
-        public static SettingsViewModel LoadSettings()
+        public static Settings LoadSettings()
         {
             string path = "config.json";
             string json = File.ReadAllText(path);
-            SettingsViewModel settings = JsonConvert.DeserializeObject<SettingsViewModel>(json) ?? new();
+            Settings settings = JsonConvert.DeserializeObject<Settings>(json) ?? new();
             return settings;
         }
 
-        public static void SaveSettings(SettingsViewModel settings)
+        public static void SaveSettings(Settings settings)
         {
             string path = "config.json";
             string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
@@ -44,6 +49,7 @@ namespace Sunbeam
 
     public class GlobalMemory
     {
-        public string? CurrentFile { get; set; }
+        public string CurrentFile { get; set; } = string.Empty;
+        public string CurrentFileFriendly { get; set; } = string.Empty;
     }
 }

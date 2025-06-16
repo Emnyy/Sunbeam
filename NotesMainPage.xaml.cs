@@ -22,15 +22,20 @@ namespace Sunbeam
         public NotesMainPage()
         {
             InitializeComponent();
+            GlobalItems = ((App)Application.Current).GlobalItems;
             GlobalMemory = ((App)Application.Current).GlobalMemory;
+            Settings = ((App)Application.Current).Settings;
 
             NoteList.PointerEntered += UIHelpers.NoteHover;
             NoteList.PointerExited += UIHelpers.NoteHoverStop;
 
             Exit.PointerEntered += UIHelpers.NoteHover;
             Exit.PointerExited += UIHelpers.NoteHoverStop;
+            MainTextArea.Focus(FocusState.Pointer);
         }
+        public GlobalItems GlobalItems { get; set; }
         public GlobalMemory GlobalMemory { get; set; }
+        public Settings Settings { get; set; }
         private void ListNotes(object sender, PointerRoutedEventArgs e)
         {
             Frame.Navigate(typeof(NotesMenuPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });

@@ -28,12 +28,14 @@ namespace Sunbeam
 
         public App()
         {
-            ViewModel = new SettingsViewModel();
+            GlobalItems = new GlobalItems();
+            GlobalMemory = new GlobalMemory();
+            Settings = new Settings();
             InitializeComponent();
         }
-
-        public SettingsViewModel ViewModel { get; set; }
-        public GlobalMemory GlobalMemory { get; set; } = new GlobalMemory();
+        public GlobalItems GlobalItems { get; set; }
+        public GlobalMemory GlobalMemory { get; set; }
+        public Settings Settings { get; set; }
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
@@ -61,7 +63,8 @@ namespace Sunbeam
 
             if (count != -1) { File.Create(FileName); }
 
-            GlobalMemory.CurrentFile = FileName[6..^4];
+            GlobalMemory.CurrentFile = FileName;
+            GlobalMemory.CurrentFileFriendly = FileName[6..^4];
 
             if (!mutex.WaitOne(0, false))
             {
@@ -70,7 +73,7 @@ namespace Sunbeam
             }
             else
             {
-                ViewModel = SettingsViewModel.LoadSettings();
+                GlobalItems.Settings = Settings.LoadSettings();
                 _window = new SettingsWindow();
                 _window.Activate();
             }

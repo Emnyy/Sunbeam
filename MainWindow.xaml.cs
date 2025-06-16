@@ -21,9 +21,10 @@ namespace Sunbeam
 {
     public sealed partial class MainWindow : Window
     {
-
+        public GlobalMemory GlobalMemory { get; set; }
         public MainWindow()
         {
+            GlobalMemory = ((App)Application.Current).GlobalMemory;
             InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
@@ -49,6 +50,31 @@ namespace Sunbeam
                 if (page.FindName("Exit") is Border exit)
                 {
                     exit.PointerPressed += CloseWindow;
+                }
+            }
+
+            Closed += Window_SaveFile;
+            Activated += Window_SaveFile;
+        }
+
+        private void Window_SaveFile(object sender, WindowActivatedEventArgs args)
+        {
+            if (MainFrame.Content is Page page)
+            {
+                if (page.FindName("MainTextArea") is TextBox textBox)
+                {
+                    File.WriteAllText(GlobalMemory.CurrentFile ?? "Notes\\" + DateTime.Now.ToString() + ".txt", textBox.Text);
+                }
+            }
+        }
+
+        private void Window_SaveFile(object sender, WindowEventArgs e)
+        {
+            if (MainFrame.Content is Page page)
+            {
+                if(page.FindName("MainTextArea") is TextBox textBox)
+                {
+                    File.WriteAllText(GlobalMemory.CurrentFile ?? "Notes\\" + DateTime.Now.ToString() + ".txt", textBox.Text);
                 }
             }
         }
