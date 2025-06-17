@@ -13,12 +13,8 @@
      x:Name="ThisPage">
 
     <Page.Resources>
-        <!--  These styles can be referenced to create a consistent SettingsPage layout  -->
-
-        <!--  Spacing between cards  -->
         <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
-        <!--  Style (inc. the correct spacing) of a section header  -->
         <Style x:Key="SettingsSectionHeaderTextBlockStyle"
                BasedOn="{StaticResource BodyStrongTextBlockStyle}"
                TargetType="TextBlock">
@@ -101,7 +97,7 @@
                     </controls:SettingsExpander.Items>
                 </controls:SettingsExpander>
 
-                <controls:SettingsCard Margin="0, 0, 0, 4" Description="Fit text within window by default"
+                <controls:SettingsCard Margin="0, 0, 0, 4" Description="Fit text within window"
    Header="Word wrap"
    HeaderIcon="{ui:FontIcon Glyph=&#xE8C4;}">
                     <ToggleSwitch IsOn="{Binding Wrap, Mode=TwoWay}" />

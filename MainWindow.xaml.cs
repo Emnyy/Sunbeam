@@ -37,11 +37,13 @@ namespace Sunbeam
 
             MainFrame.Navigate(typeof(NotesMainPage));
 
-            var present = AppWindow.Presenter as OverlappedPresenter;
-            if (present != null)
-            {
-                present.IsAlwaysOnTop = true;
-            }
+            /*
+             * var present = AppWindow.Presenter as OverlappedPresenter;
+             *if (present != null)
+             *{
+             *  present.IsAlwaysOnTop = true;
+             *}
+            */
 
 
             if (MainFrame.Content is Page page)

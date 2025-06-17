@@ -51,5 +51,8 @@ namespace Sunbeam
     {
         public string CurrentFile { get; set; } = string.Empty;
         public string CurrentFileFriendly { get; set; } = string.Empty;
+        public string CurrentFileContent { get; set; } = string.Empty;
+        public string WrapFix { get; set; } = string.Empty;
+        public string[,]? NoteList { get; set; }
     }
 }

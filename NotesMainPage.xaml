@@ -16,13 +16,13 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" VerticalAlignment="Top" x:Name="TopBar">
             <Grid Padding="0, 0, 0, -12">
-                <Border x:Name="NoteList" Padding="12" PointerPressed="ListNotes"  HorizontalAlignment="Left">
+                <Border x:Name="NoteListButton" Padding="12" PointerPressed="ListNotes"  HorizontalAlignment="Left">
                     <FontIcon Glyph="&#xEA37;" FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                 </Border>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <FontIcon x:Name="IsFavoriteStar1" Glyph="&#xE734;"  FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
-                    <Border Padding="12" HorizontalAlignment="Center">
+                        <Border Padding="12" HorizontalAlignment="Center">
                         <TextBox x:Name="FileName" Text="{x:Bind GlobalMemory.CurrentFileFriendly, Mode=TwoWay}" FontSize="24" Background="{ThemeResource SystemAccentColor}" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}">
                             <TextBox.Resources>
                                 <SolidColorBrush x:Key="TextControlBackground" Color="{ThemeResource SystemAccentColor}"/>
@@ -33,7 +33,7 @@
                             </TextBox.Resources>
                         </TextBox>
                     </Border>
-                    <FontIcon x:Name="IsFavoriteStar2" Glyph="&#xE734;"  FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+                    <FontIcon x:Name="IsFavoriteStar2" Glyph="&#xE734;" FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                 </StackPanel>
 
                 <Border x:Name="Exit" Padding="12" HorizontalAlignment="Right">
@@ -42,8 +42,8 @@
             </Grid>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10">
-            <TextBox FontSize="{x:Bind Settings.FontSize, Mode=TwoWay}" CanDrag="True" Foreground="{ThemeResource SystemAccentColor}" AcceptsReturn="True"  IsSpellCheckEnabled="True" x:Name="MainTextArea" TextWrapping="Wrap">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+            <TextBox Text="{x:Bind GlobalMemory.CurrentFileContent, Mode=TwoWay}" FontSize="{x:Bind Settings.FontSize, Mode=TwoWay}" CanDrag="True" Foreground="{ThemeResource SystemAccentColor}" AcceptsReturn="True"  IsSpellCheckEnabled="True" x:Name="MainTextArea" TextWrapping="{x:Bind GlobalMemory.WrapFix}">
                 <TextBox.Resources>
                     <SolidColorBrush x:Key="TextControlBackground" Color="{ThemeResource SystemAccentColorLight3}"/>
                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{ThemeResource SystemAccentColorLight3}"/>

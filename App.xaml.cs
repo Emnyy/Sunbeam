@@ -30,7 +30,7 @@ namespace Sunbeam
         {
             GlobalItems = new GlobalItems();
             GlobalMemory = new GlobalMemory();
-            Settings = new Settings();
+            Settings = Settings.LoadSettings();
             InitializeComponent();
         }
         public GlobalItems GlobalItems { get; set; }
@@ -47,7 +47,7 @@ namespace Sunbeam
                 Directory.CreateDirectory(FileName);
             }
 
-            FileName = "Notes\\Unnamed" + count + ".txt";
+            FileName = "Notes\\Unnamed " + count + ".txt";
 
             while (File.Exists(FileName))
             {
@@ -56,7 +56,7 @@ namespace Sunbeam
                     count = -1;
                     break;
                 }
-                FileName = "Notes\\Unnamed" + count + ".txt";
+                FileName = "Notes\\Unnamed " + count + ".txt";
                 count++;
                 
             }
@@ -73,7 +73,6 @@ namespace Sunbeam
             }
             else
             {
-                GlobalItems.Settings = Settings.LoadSettings();
                 _window = new SettingsWindow();
                 _window.Activate();
             }

@@ -26,16 +26,34 @@ namespace Sunbeam
             GlobalMemory = ((App)Application.Current).GlobalMemory;
             Settings = ((App)Application.Current).Settings;
 
-            NoteList.PointerEntered += UIHelpers.NoteHover;
-            NoteList.PointerExited += UIHelpers.NoteHoverStop;
+            if (Settings.Wrap == true) { GlobalMemory.WrapFix = "Wrap"; }
+            else { GlobalMemory.WrapFix = "NoWrap"; }
+
+            NoteListButton.PointerEntered += UIHelpers.NoteHover;
+            NoteListButton.PointerExited += UIHelpers.NoteHoverStop;
 
             Exit.PointerEntered += UIHelpers.NoteHover;
             Exit.PointerExited += UIHelpers.NoteHoverStop;
             MainTextArea.Focus(FocusState.Pointer);
+
+            //GlobalMemory.CurrentFileContent = GetFileContent(GlobalMemory.CurrentFile);
         }
         public GlobalItems GlobalItems { get; set; }
         public GlobalMemory GlobalMemory { get; set; }
         public Settings Settings { get; set; }
+
+        private static string GetFileContent(string file)
+        {
+            if (File.Exists(file))
+            {
+                return File.ReadAllText(file);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         private void ListNotes(object sender, PointerRoutedEventArgs e)
         {
             Frame.Navigate(typeof(NotesMenuPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
