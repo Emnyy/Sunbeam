@@ -36,8 +36,18 @@ namespace Sunbeam
             Exit.PointerExited += UIHelpers.NoteHoverStop;
             MainTextArea.Focus(FocusState.Pointer);
 
+            Exit.PointerPressed += Exit_PointerPressed;
+
             //GlobalMemory.CurrentFileContent = GetFileContent(GlobalMemory.CurrentFile);
+
         }
+
+        private void Exit_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            if (GlobalMemory.Window == null) { return; }
+            GlobalMemory.Window.Close();
+        }
+
         public GlobalItems GlobalItems { get; set; }
         public GlobalMemory GlobalMemory { get; set; }
         public Settings Settings { get; set; }
@@ -57,6 +67,14 @@ namespace Sunbeam
         private void ListNotes(object sender, PointerRoutedEventArgs e)
         {
             Frame.Navigate(typeof(NotesMenuPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+        }
+
+        private void FileName_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            if (args.NewText.Any(c => Path.GetInvalidFileNameChars().Contains(c)))
+            {
+                args.Cancel = true;
+            }
         }
     }
 }

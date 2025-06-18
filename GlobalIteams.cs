@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Windows.UI;
 using Newtonsoft.Json;
+using Microsoft.UI.Xaml;
 
 namespace Sunbeam
 {
@@ -45,14 +46,15 @@ namespace Sunbeam
             string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             File.WriteAllText(path, json);
         }
+
     }
 
     public class GlobalMemory
     {
         public string CurrentFile { get; set; } = string.Empty;
-        public string CurrentFileFriendly { get; set; } = string.Empty;
         public string CurrentFileContent { get; set; } = string.Empty;
         public string WrapFix { get; set; } = string.Empty;
         public string[,]? NoteList { get; set; }
+        public Window? Window { get; set; }
     }
 }

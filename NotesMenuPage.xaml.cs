@@ -1,4 +1,5 @@
 using ABI.Windows.UI;
+using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -34,24 +35,80 @@ namespace Sunbeam
 
             GlobalMemory = ((App)Application.Current).GlobalMemory;
 
-            GlobalMemory.NoteList = GetFileInfo();
+            GetNoteList();
+        }
 
-            for (int i = 0; i < GlobalMemory.NoteList.GetLength(0) - 1; i++)
+        void GetNoteList()
+        {
+            GlobalMemory.NoteList = GetFileInfo(false, String.Empty);
+
+            if (GlobalMemory.NoteList != null)
             {
-                var settingsCard = new SettingsCard
+                for (int i = 0; i < GlobalMemory.NoteList.GetLength(1); i++)
                 {
-                    IsClickEnabled = true,
-                    IsActionIconVisible = false,
-                    Foreground = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColor"]),
-                    Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColorLight3"]),
-                    Margin = new Thickness(0, 0, 0, 4),
-                    Header = GlobalMemory.NoteList[2, i],
-                    Tag = i,
-                };
+                    var stackpanel = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal
+                    };
 
-                settingsCard.Click += SettingsCard_Click;
+                    var favoriteIcon = new FontIcon
+                    {
+                        Glyph = "\uE734",
+                        FontSize = 16,
+                        Foreground = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColor"])
+                    };
 
-                NoteList.Children.Add(settingsCard);
+                    var deleteIcon = new FontIcon
+                    {
+                        Glyph = "\uE74D",
+                        FontSize = 16,
+                        Foreground = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColor"])
+                    };
+
+                    var Border1 = new Border
+                    {
+                        Margin = new Thickness(0, 0, 16, 0),
+                    };
+                    var Border2 = new Border { };
+
+                    var settingsCard = new SettingsCard
+                    {
+                        IsClickEnabled = true,
+                        IsActionIconVisible = false,
+                        Foreground = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColor"]),
+                        Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColorLight3"]),
+                        Margin = new Thickness(0, 0, 0, 4),
+                        Header = GlobalMemory.NoteList[1, i],
+                        Tag = i,
+                        Content = stackpanel
+                    };
+
+                    settingsCard.Click += SettingsCard_Click;
+
+                    Border1.PointerPressed += ToggleFavortie;
+                    Border2.PointerPressed += DeleteNote;
+
+                    Border1.Child = favoriteIcon;
+                    Border2.Child = deleteIcon;
+
+                    stackpanel.Children.Add(Border1);
+                    stackpanel.Children.Add(Border2);
+
+                    NoteList.Children.Add(settingsCard);
+                }
+            }
+        }
+
+        private void DeleteNote(object sender, PointerRoutedEventArgs e)
+        {
+            if (GlobalMemory.NoteList != null && sender is Border border && border.Parent is StackPanel stackPanel && stackPanel.Parent is SettingsCard settingsCard)
+            {
+                File.Delete("Notes\\" + GlobalMemory.NoteList[1, (int)settingsCard.Tag] + ".txt");
+                GlobalMemory.NoteList[1, (int)settingsCard.Tag] = String.Empty;
+                GlobalMemory.NoteList[0, (int)settingsCard.Tag] = String.Empty;
+                //GlobalMemory.NoteList = GetFileInfo(false, String.Empty);
+                NoteList.Children.Remove(settingsCard);
+                e.Handled = true;
             }
         }
 
@@ -60,11 +117,10 @@ namespace Sunbeam
             if (sender is SettingsCard card)
             {
                 Frame.Navigate(typeof(NotesMainPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
-                //GlobalMemory.CurrentFileContent = GlobalMemory.NoteList[(int)card.Tag, 2];
+
                 if(GlobalMemory.NoteList == null) { return; }
                 GlobalMemory.CurrentFile = GlobalMemory.NoteList[1, (int)card.Tag];
-                GlobalMemory.CurrentFileFriendly = GlobalMemory.CurrentFile[6..^4];
-                GlobalMemory.CurrentFileContent = File.ReadAllText(GlobalMemory.CurrentFile);
+                GlobalMemory.CurrentFileContent = File.ReadAllText("Notes\\" + GlobalMemory.CurrentFile + ".txt");
             }
         }
 
@@ -87,22 +143,59 @@ namespace Sunbeam
                 {
                     icon.Glyph = "\uE734";
                 }
+                if(border.Parent is StackPanel stackPanel && stackPanel.Parent is SettingsCard)
+                {
+                    e.Handled = true;
+                }
             }
         }
 
-        private static string[,] GetFileInfo()
+        private static string[,] GetFileInfo(bool CheckString, string query)
         {
             string[] files = Directory.GetFiles("Notes", "*.txt");
             int i = files.Length;
-            string[,] output = new string[3, i];
+            string[,] output = new string[2, i];
 
             for (int x = 0; x < i; x++)
             {
                 output[0, x] = File.GetLastWriteTime(files[x]).ToShortDateString();
-                output[1, x] = files[x];
-                output[2, x] = files[x][6..^4];
+                output[1, x] = files[x][6..^4];
+            }
+            if (CheckString)
+            {
+                var filteredData = Enumerable.Range(0, output.GetLength(1))
+                                             .Where(a => output[1, a].StartsWith(query, StringComparison.OrdinalIgnoreCase))
+                             .Select(a => new { Time = output[0, a], File = output[1, a] })
+                             .ToList();
+
+                if (filteredData.Count == 0)
+                {
+                    return new string[0, 0];
+                }
+
+                output = new string[2, filteredData.Count];
+                for (int j = 0; j < filteredData.Count; j++)
+                {
+                    output[0, j] = filteredData[j].Time;
+                    output[1, j] = filteredData[j].File;
+                }
             }
             return output;
+        }
+
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            string query = Search.Text.ToLowerInvariant();
+            NoteList.Children.Clear();
+
+            GlobalMemory.NoteList = GetFileInfo(true, query);
+            if (GlobalMemory.NoteList.GetLength(1) == 0)
+            {
+               return;
+            }
+
+            GetNoteList();
+
         }
     }
 }

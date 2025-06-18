@@ -63,8 +63,7 @@ namespace Sunbeam
 
             if (count != -1) { File.Create(FileName); }
 
-            GlobalMemory.CurrentFile = FileName;
-            GlobalMemory.CurrentFileFriendly = FileName[6..^4];
+            GlobalMemory.CurrentFile = FileName[6..^4];
 
             if (!mutex.WaitOne(0, false))
             {
@@ -75,6 +74,15 @@ namespace Sunbeam
             {
                 _window = new SettingsWindow();
                 _window.Activate();
+            }
+
+            if (Settings.AppTheme == 0)
+            {
+                RequestedTheme = ApplicationTheme.Light;
+            }
+            else if (Settings.AppTheme == 1)
+            {
+                RequestedTheme = ApplicationTheme.Dark;
             }
         }
     }

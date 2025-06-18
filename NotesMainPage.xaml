@@ -23,7 +23,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <FontIcon x:Name="IsFavoriteStar1" Glyph="&#xE734;"  FontSize="24" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
                         <Border Padding="12" HorizontalAlignment="Center">
-                        <TextBox x:Name="FileName" Text="{x:Bind GlobalMemory.CurrentFileFriendly, Mode=TwoWay}" FontSize="24" Background="{ThemeResource SystemAccentColor}" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}">
+                        <TextBox MaxLength="200" x:Name="FileName" BeforeTextChanging="FileName_BeforeTextChanging" Text="{x:Bind GlobalMemory.CurrentFile, Mode=TwoWay}" FontSize="24" Background="{ThemeResource SystemAccentColor}" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}">
                             <TextBox.Resources>
                                 <SolidColorBrush x:Key="TextControlBackground" Color="{ThemeResource SystemAccentColor}"/>
                                 <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{ThemeResource SystemAccentColorLight3}"/>

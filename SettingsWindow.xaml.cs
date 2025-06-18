@@ -20,6 +20,7 @@ using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.Win32.UI.WindowsAndMessaging;
 using WinRT.Interop;
+using IWshRuntimeLibrary;
 
 
 namespace Sunbeam
@@ -129,12 +130,33 @@ namespace Sunbeam
             {
                 Settings.SaveSettings(Settings);
             }
-            _ = UnregisterHotKey(IntPtr.Zero, 1);
         }
 
         private void Window_SaveSettings(object sender, WindowEventArgs e)
         {
             Settings.SaveSettings(Settings);
+            _ = UnregisterHotKey(IntPtr.Zero, 1);
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            if (Settings.AutoStart == true)
+            {
+                string? exe = Environment.ProcessPath;
+                if (exe == null) { return; }
+
+                WshShell shell = new();
+                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(path);
+                shortcut.TargetPath = exe;
+                shortcut.WorkingDirectory = Path.GetDirectoryName(exe);
+                shortcut.Description = "Launch Sunbeam";
+                shortcut.Save();
+            }
+            else
+            {
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+            }
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

@@ -16,7 +16,6 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 
-
 namespace Sunbeam
 {
     public sealed partial class SettingsOptionsPage : Page
@@ -44,7 +43,7 @@ namespace Sunbeam
 
         private void AppTheme_Changed(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
         private async void ColorPicker_open(object sender, RoutedEventArgs e)
